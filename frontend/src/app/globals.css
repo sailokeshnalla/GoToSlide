@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@layer base {
+  body {
+    @apply bg-white text-[#0F172A] antialiased;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Premium SaaS Card Style */
+.premium-card {
+  @apply bg-white border border-[#E2E8F0] rounded-2xl transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.03)];
+}
+
+.premium-card:hover {
+  @apply shadow-[0_12px_30px_rgba(0,0,0,0.06)] -translate-y-1;
+}
+
+.text-gradient {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] to-[#A855F7];
+}
+
+/* Thin styled scrollbar — only for the modal sidebar */
+.modal-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.modal-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(99, 102, 241, 0.3);
+  border-radius: 999px;
+}
+.modal-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.6);
+}
