@@ -193,6 +193,10 @@ def _extract_from_text_frame(
         if not font_size_pt and paragraph.font and paragraph.font.size:
             font_size_pt = paragraph.font.size.pt
         font_size_pt = font_size_pt or 18
+        
+        # Apply any scaling from parent groups to get the true visual size
+        effective_font_size = font_size_pt * scale_y
+
         font_color_hex = font_color_hex or "#1e293b"
 
         align_val = _paragraph_alignment(paragraph)
@@ -202,7 +206,7 @@ def _extract_from_text_frame(
             "top": top_pct,
             "width": width_pct,
             "height": height_pct,
-            "fontSize": font_size_pt,
+            "fontSize": round(effective_font_size, 1),
             "align": align_val,
             "color": font_color_hex,
             "isBold": is_bold,

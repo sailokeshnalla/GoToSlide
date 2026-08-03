@@ -577,7 +577,7 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
             const schemaMeta = augmentedSchema[normKey] || augmentedSchema[ph] || {};
 
             initialStyles[ph] = {
-              fontSize:   schemaMeta.recommended_font_size || meta.fontSize || 18,
+              fontSize:   meta.fontSize || schemaMeta.recommended_font_size || 18,
               bold:       schemaMeta.is_bold ?? meta.isBold ?? false,
               italic:     meta.isItalic || false,
               underline:  false,
@@ -922,7 +922,7 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
                     const schemaLines   = schemaPh.lines       || 1;
                     const isMultiline   = schemaPh.is_multiline || schemaLines > 1;
                     const schemaBold    = schemaPh.is_bold      ?? mapping.isBold ?? false;
-                    const recommendedPt = schemaPh.recommended_font_size || mapping.fontSize || 18;
+                    const recommendedPt = mapping.fontSize || schemaPh.recommended_font_size || 18;
 
                     const activePt      = parseFloat(style.fontSize || recommendedPt);
                     const slideWidthPt  = slideDimensions.type === 'svg'
