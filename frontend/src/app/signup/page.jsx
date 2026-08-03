@@ -41,11 +41,6 @@ export default function SignupPage() {
     setError('');
     setMessage('');
 
-    if (!apiKey.trim()) {
-      setError('Please add your API key so GoToSlide can generate decks on your behalf.');
-      return;
-    }
-
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signUp({
@@ -234,7 +229,6 @@ export default function SignupPage() {
                 value={apiKey}
                 onChange={(e) => setApiKey(e.target.value)}
                 placeholder={`${activeProvider.prefix}…`}
-                required
                 spellCheck={false}
                 autoComplete="off"
                 className={`w-full bg-white border text-[#0F172A] rounded-xl pl-10 pr-11 py-2.5 outline-none focus:ring-2 transition placeholder-[#94A3B8] font-mono text-sm ${
