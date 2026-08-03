@@ -38,8 +38,12 @@ export default function TemplateCard({
         delay: index * 0.05,
         ease: [0.22, 1, 0.36, 1],
       }}
-      whileHover={{ y: -6 }}
-      className="group premium-card flex flex-col overflow-hidden bg-white"
+      whileHover={{ 
+        scale: 1.45, 
+        y: -15,
+        transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+      }}
+      className="group premium-card flex flex-col overflow-hidden bg-white hover:z-50 hover:shadow-2xl transition-all duration-500 relative"
     >
       {/* IMAGE SECTION */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#F8FAFC] border-b border-[#E2E8F0]">
@@ -48,7 +52,7 @@ export default function TemplateCard({
           alt={template.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          className="object-contain p-4 transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          className="object-contain p-2 transition-transform duration-700 ease-out"
           priority={index < 3}
         />
 
