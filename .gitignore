@@ -58,3 +58,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+#api
+scripts/api_keys.csv
