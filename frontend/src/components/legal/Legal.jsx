@@ -4,7 +4,7 @@ export function LegalShell({ title, updated, children }) {
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-[#F8FAFC] via-[#FAFAFF] to-[#F5F3FF]">
       <BubbleBackground />
-      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#0F172A]">
+      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#2a2a2a]">
         <h1 className="text-4xl font-extrabold mb-2">{title}</h1>
         {updated && (
           <p className="text-[#64748B] text-sm mb-10">Last updated: {updated}</p>
@@ -46,7 +46,7 @@ export function A({ href, children, className = '' }) {
       href={finalHref}
       target={isMailto ? '_blank' : undefined}
       rel={isMailto ? 'noopener noreferrer' : undefined}
-      className={`text-[#7C3AED] underline ${className}`.trim()}
+      className={`text-[#f16917] underline ${className}`.trim()}
     >
       {children}
     </a>

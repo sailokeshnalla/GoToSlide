@@ -29,8 +29,7 @@ export default function PrivacyPolicyPage() {
           your Google account.
         </LI>
         <LI>
-          <strong>Your AI provider API key (bring-your-own-key).</strong> To generate
-          content, you connect your own Google Gemini or xAI Grok API key. We store this key
+          <strong>API Keys:</strong> To use AI content generation, you connect your own Google Gemini API key. We store this key
           on your account solely so the Service can make AI requests on your behalf. You can
           view, replace, or remove it at any time from your dashboard.
         </LI>
@@ -54,15 +53,12 @@ export default function PrivacyPolicyPage() {
 
       <H2>AI processing and third parties</H2>
       <P>
-        When you use the “Generate with AI” feature, the brief you enter and your connected
-        API key are sent to your chosen provider (Google Gemini or xAI Grok) to produce the
+        <strong>Third-party AI services:</strong> When you generate content, your prompt and API key are sent to your chosen provider (Google Gemini) to produce the
         content. That processing is governed by the provider’s own terms and privacy policy.
         We do not use your prompts or generated content to train our own models.
       </P>
       <P>
-        We rely on the following service providers to run the Service: our hosting,
-        authentication, and database provider (Supabase); Google (for Gemini and Google
-        sign-in); and xAI (for Grok). These providers process data on our behalf or under
+        We use trusted vendors like Supabase (for database and auth); Google (for auth and AI services). These providers process data on our behalf or under
         their own terms as applicable.
       </P>
 

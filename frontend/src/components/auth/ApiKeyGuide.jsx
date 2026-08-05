@@ -20,20 +20,6 @@ const GUIDES = {
     ],
     note: 'Gemini has a free tier — no credit card needed to start prototyping.',
   },
-  grok: {
-    label: 'xAI Grok',
-    console: 'https://console.x.ai',
-    consoleLabel: 'Open xAI Console',
-    keyHint: 'Starts with “xai-” followed by a long string.',
-    steps: [
-      'Go to console.x.ai and sign up with your email or Google sign-in.',
-      'Open “Billing” in the sidebar and add a payment method (new accounts get promotional credits).',
-      'Click “API Keys” in the sidebar, then “Create API Key”.',
-      'Name the key and select the models/endpoints it can use.',
-      'Copy the key immediately — xAI shows the secret only once — and paste it above.',
-    ],
-    note: 'Grok has no permanent free tier, but new accounts start with promotional credits.',
-  },
 };
 
 export default function ApiKeyGuide({ provider = 'gemini', defaultOpen = false }) {
@@ -47,8 +33,8 @@ export default function ApiKeyGuide({ provider = 'gemini', defaultOpen = false }
         onClick={() => setOpen((o) => !o)}
         className="w-full flex items-center justify-between gap-3 px-4 py-3 text-left cursor-pointer hover:bg-[#F1F5F9] transition-colors"
       >
-        <span className="flex items-center gap-2 text-sm font-semibold text-[#0F172A]">
-          <KeyRound className="w-4 h-4 text-[#7C3AED]" />
+        <span className="flex items-center gap-2 text-sm font-semibold text-[#2a2a2a]">
+          <KeyRound className="w-4 h-4 text-[#f16917]" />
           How do I get a {guide.label} API key?
         </span>
         <ChevronDown
@@ -69,7 +55,7 @@ export default function ApiKeyGuide({ provider = 'gemini', defaultOpen = false }
               <ol className="space-y-2.5 mt-3">
                 {guide.steps.map((step, i) => (
                   <li key={i} className="flex gap-3 text-sm text-[#475569] leading-relaxed">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white text-[11px] font-bold flex items-center justify-center mt-0.5">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-gradient-to-r from-[#f16917] to-[#fcbd24] text-white text-[11px] font-bold flex items-center justify-center mt-0.5">
                       {i + 1}
                     </span>
                     <span>{step}</span>
@@ -85,7 +71,7 @@ export default function ApiKeyGuide({ provider = 'gemini', defaultOpen = false }
                 href={guide.console}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#7C3AED] hover:text-[#A855F7] transition-colors"
+                className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#f16917] hover:text-[#fcbd24] transition-colors"
               >
                 {guide.consoleLabel}
                 <ExternalLink className="w-3.5 h-3.5" />

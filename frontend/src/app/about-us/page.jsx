@@ -9,7 +9,7 @@ export default function AboutUs() {
     <div className="relative overflow-hidden bg-gradient-to-br from-[#F8FAFC] via-[#FAFAFF] to-[#F5F3FF]">
       <BubbleBackground />
 
-      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#0F172A]">
+      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#2a2a2a]">
         <h1 className="text-4xl font-extrabold mb-6">About GoToSlide</h1>
 
         <p className="text-[#475569] leading-8 mb-6">

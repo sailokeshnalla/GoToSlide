@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Download, Wand2, Bold, Italic, Underline, ChevronDown, Sparkles, AlertCircle } from 'lucide-react';
+import { ArrowLeft, Download, Wand2, Bold, Italic, Underline, ChevronDown, Sparkles, AlertCircle, Settings } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { backendApi } from '@/lib/backendApi';
+import ApiKeyPromptModal from './ApiKeyPromptModal';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -69,7 +71,7 @@ const FONT_FAMILIES = [
 const COLOR_PALETTE = [
   '#ffffff','#f1f5f9','#94a3b8','#1e293b','#000000',
   '#ef4444','#f97316','#eab308','#22c55e','#06b6d4',
-  '#3b82f6','#6366f1','#8b5cf6','#ec4899','#f43f5e',
+  '#3b82f6','#f16917','#fcbd24','#ec4899','#f43f5e',
 ];
 
 function PowerPointIcon({ className }) {
@@ -97,9 +99,9 @@ function PdfIcon({ className }) {
 function ImageFileIcon({ className }) {
   return (
     <svg viewBox="0 0 48 48" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="4" y="6" width="40" height="36" rx="6" fill="#7C3AED" />
+      <rect x="4" y="6" width="40" height="36" rx="6" fill="#f16917" />
       <circle cx="16" cy="18" r="4" fill="#FDE68A" />
-      <path d="M4 34L16 24L24 30L34 20L44 30V36C44 39.3137 41.3137 42 38 42H10C6.68629 42 4 39.3137 4 36V34Z" fill="#A855F7" />
+      <path d="M4 34L16 24L24 30L34 20L44 30V36C44 39.3137 41.3137 42 38 42H10C6.68629 42 4 39.3137 4 36V34Z" fill="#fcbd24" />
     </svg>
   );
 }
@@ -171,7 +173,7 @@ function PlaceholderField({
 
   const barColor = isAtLimit   ? '#ef4444'
                  : isNearLimit ? '#eab308'
-                 : fillPct > 0 ? '#6366f1'
+                 : fillPct > 0 ? '#f16917'
                  :               '#334155';
 
   useEffect(() => {
@@ -183,7 +185,7 @@ function PlaceholderField({
 
   const borderClass = isAtLimit   ? 'border-red-500/60 focus:border-red-500'
                     : isNearLimit ? 'border-yellow-500/60 focus:border-yellow-500'
-                    :               'border-slate-200 focus:border-indigo-500';
+                    :               'border-slate-200 focus:border-[#f16917]';
 
   const inputFontSize = (() => {
     if (isMultiline) return undefined;
@@ -226,7 +228,7 @@ function PlaceholderField({
               e.target.style.height = 'auto';
               e.target.style.height = e.target.scrollHeight + 'px';
             }}
-            className={`w-full p-3 bg-white border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 placeholder-slate-400 transition-colors ${borderClass}`}
+            className={`w-full p-3 bg-white border rounded-xl focus:ring-2 focus:ring-[#f16917] outline-none text-slate-800 placeholder-slate-400 transition-colors ${borderClass}`}
             placeholder={`Enter your ${label}...`}
             style={inputStyle}
           />
@@ -236,7 +238,7 @@ function PlaceholderField({
             value={formData[ph] || ''}
             maxLength={charLimit ?? undefined}
             onChange={(e) => setFormData(prev => ({ ...prev, [ph]: e.target.value }))}
-            className={`w-full p-3 bg-white border rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none text-slate-800 placeholder-slate-400 transition-colors ${borderClass}`}
+            className={`w-full p-3 bg-white border rounded-xl focus:ring-2 focus:ring-[#f16917] outline-none text-slate-800 placeholder-slate-400 transition-colors ${borderClass}`}
             placeholder={`Enter your ${label}...`}
             style={inputStyle}
           />
@@ -283,7 +285,7 @@ function PlaceholderField({
         <button
           title="Bold"
           onClick={() => updateStyle(setFontStyles, ph, 'bold', !style.bold)}
-          className={`p-1.5 rounded-lg transition-all ${style.bold ? 'bg-indigo-500 text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200'}`}
+          className={`p-1.5 rounded-lg transition-all ${style.bold ? 'bg-[#f16917] text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200'}`}
         >
           <Bold className="w-3.5 h-3.5" />
         </button>
@@ -291,7 +293,7 @@ function PlaceholderField({
         <button
           title="Italic"
           onClick={() => updateStyle(setFontStyles, ph, 'italic', !style.italic)}
-          className={`p-1.5 rounded-lg transition-all ${style.italic ? 'bg-indigo-500 text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200'}`}
+          className={`p-1.5 rounded-lg transition-all ${style.italic ? 'bg-[#f16917] text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200'}`}
         >
           <Italic className="w-3.5 h-3.5" />
         </button>
@@ -299,7 +301,7 @@ function PlaceholderField({
         <button
           title="Underline"
           onClick={() => updateStyle(setFontStyles, ph, 'underline', !style.underline)}
-          className={`p-1.5 rounded-lg transition-all ${style.underline ? 'bg-indigo-500 text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200'}`}
+          className={`p-1.5 rounded-lg transition-all ${style.underline ? 'bg-[#f16917] text-white' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-200'}`}
         >
           <Underline className="w-3.5 h-3.5" />
         </button>
@@ -309,7 +311,7 @@ function PlaceholderField({
         <select
           value={style.fontSize || 18}
           onChange={(e) => updateStyle(setFontStyles, ph, 'fontSize', Number(e.target.value))}
-          className="bg-white border border-slate-200 text-slate-700 text-xs rounded-lg px-1.5 py-1 outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer"
+          className="bg-white border border-slate-200 text-slate-700 text-xs rounded-lg px-1.5 py-1 outline-none focus:ring-1 focus:ring-[#f16917] cursor-pointer"
           title="Font size"
         >
           {FONT_SIZES.map(s => <option key={s} value={s}>{s}pt</option>)}
@@ -324,7 +326,7 @@ function PlaceholderField({
               setOpenFontPicker(openFontPicker === ph ? null : ph);
               setOpenColorPicker(null);
             }}
-            className="flex items-center gap-1 bg-white border border-slate-200 text-slate-700 text-xs rounded-lg px-2 py-1 hover:border-indigo-500/50 transition-all"
+            className="flex items-center gap-1 bg-white border border-slate-200 text-slate-700 text-xs rounded-lg px-2 py-1 hover:border-[#f16917]/50 transition-all"
             title="Font family"
           >
             <span>{FONT_FAMILIES.find(f => f.value === style.fontFamily)?.label || 'Default'}</span>
@@ -341,7 +343,7 @@ function PlaceholderField({
                   }}
                   style={{ fontFamily: f.value }}
                   className={`block w-full text-left px-3 py-2 text-xs transition-colors ${
-                    style.fontFamily === f.value ? 'bg-indigo-50 text-indigo-600' : 'text-slate-700 hover:bg-slate-50'
+                    style.fontFamily === f.value ? 'bg-[#f16917]/10 text-[#f16917]' : 'text-slate-700 hover:bg-slate-50'
                   }`}
                 >
                   {f.label}
@@ -360,7 +362,7 @@ function PlaceholderField({
               setOpenColorPicker(openColorPicker === ph ? null : ph);
               setOpenFontPicker(null);
             }}
-            className="flex items-center gap-1.5 bg-white border border-slate-200 text-slate-700 text-xs rounded-lg px-2 py-1 hover:border-indigo-500/50 transition-all"
+            className="flex items-center gap-1.5 bg-white border border-slate-200 text-slate-700 text-xs rounded-lg px-2 py-1 hover:border-[#f16917]/50 transition-all"
             title="Text colour"
           >
             <span
@@ -385,7 +387,7 @@ function PlaceholderField({
                     className="w-7 h-7 rounded-md transition-transform hover:scale-110"
                     style={{
                       background: c,
-                      border: style.color === c ? '2px solid #6366f1' : '1px solid rgba(0,0,0,0.1)',
+                      border: style.color === c ? '2px solid #f16917' : '1px solid rgba(0,0,0,0.1)',
                     }}
                     title={c}
                   />
@@ -403,7 +405,7 @@ function PlaceholderField({
                   }}
                   maxLength={7}
                   placeholder="#ffffff"
-                  className="flex-1 bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-700 font-mono outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="flex-1 bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs text-slate-700 font-mono outline-none focus:ring-1 focus:ring-[#f16917]"
                 />
                 <span
                   className="w-5 h-5 rounded flex-shrink-0 border border-slate-300"
@@ -446,6 +448,7 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
   const [aiError, setAiError]               = useState('');
   const [aiProvider, setAiProvider]         = useState(null);
   const [aiKeyPresent, setAiKeyPresent]     = useState(false);
+  const [showApiKeyPrompt, setShowApiKeyPrompt] = useState(false);
 
   // FLICK FIX: derive a STABLE identity for the template and key the load effect
   // on it (below) instead of the previewTemplate object. Parents sometimes hand
@@ -514,8 +517,16 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
       let schemaObj = tpl.schema;
       if (typeof schemaObj === 'string') schemaObj = JSON.parse(schemaObj);
       if (schemaObj?.placeholders) {
+        // Structure 2: Nested inside `placeholders` with actual template keys like `{{Startup}}`
         Object.entries(schemaObj.placeholders).forEach(([key, val]) => {
           parsedSchema[key.replace(/[{}\s]/g, '').toLowerCase()] = val;
+        });
+      } else if (schemaObj && typeof schemaObj === 'object') {
+        // Structure 1: Root keys like `ph_0`, `ph_1`
+        Object.entries(schemaObj).forEach(([key, val]) => {
+          if (key.startsWith('ph_')) {
+            parsedSchema[key] = val;
+          }
         });
       }
     } catch (e) {
@@ -666,10 +677,13 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
       const spec = detectedPlaceholders.map((ph) => {
         const normPh = ph.replace(/[{}\s]/g, '').toLowerCase();
         const meta   = templateSchema[normPh] || templateSchema[ph] || {};
+        const style  = fontStyles[ph] || {};
+        const effectiveLimit = getEffectiveCharLimit(meta, style);
+        
         return {
           placeholder:  ph,
           role:         meta.role || 'text',
-          char_limit:   meta.char_limit ?? null,
+          char_limit:   effectiveLimit ?? meta.char_limit ?? null,
           is_multiline: meta.is_multiline ?? false,
         };
       });
@@ -687,6 +701,10 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
       const resData = await backendApi.post('/api/generate-ai-content', payload);
 
       if (!resData || !resData.success) {
+        if (resData?.error_type === 'SHARED_KEY_EXHAUSTED') {
+          setShowApiKeyPrompt(true);
+          return;
+        }
         throw new Error(resData?.message || 'AI generation failed. Please try again.');
       }
 
@@ -819,13 +837,13 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
       >
 
         {/* ── LEFT: Slide preview ───────────────────────────────────────── */}
-        <div className="relative w-full md:w-3/5 h-[45vh] md:h-full bg-slate-100 border-r border-slate-200 flex flex-col items-center justify-center overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-30 pointer-events-none" />
+        <div className="relative w-full md:w-3/5 h-[45vh] md:h-full bg-[#fafaf9] border-r border-slate-200/60 flex flex-col items-center justify-center overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#f16917]/5 to-[#fcbd24]/5 opacity-40 pointer-events-none" />
 
           <button
             onClick={onClose}
             title="Back to categories"
-            className="absolute top-5 left-5 z-20 flex items-center gap-1.5 pl-2.5 pr-4 py-2 bg-white/90 backdrop-blur border border-slate-200 text-slate-700 hover:text-slate-900 hover:border-indigo-400 rounded-full shadow-sm transition-all active:scale-95"
+            className="absolute top-5 left-5 z-20 flex items-center gap-1.5 pl-2.5 pr-4 py-2 bg-white/80 backdrop-blur-xl border border-slate-200/60 text-slate-700 hover:text-[#f16917] hover:border-[#f16917]/30 rounded-full shadow-sm transition-all active:scale-95"
           >
             <ArrowLeft className="w-4 h-4" />
             <span className="text-sm font-semibold">Back</span>
@@ -880,7 +898,7 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
 
                 {isBasePreviewLoading && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#030712]/40 z-10 backdrop-blur-[2px]">
-                    <svg className="animate-spin h-8 w-8 text-indigo-500 mb-3 drop-shadow-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <svg className="animate-spin h-8 w-8 text-[#f16917] mb-3 drop-shadow-lg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                     </svg>
@@ -1008,38 +1026,36 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
         {/* ── RIGHT: Form sidebar ───────────────────────────────────────── */}
         <div
           ref={pickerRef}
-          className="modal-sidebar w-full md:w-2/5 h-full flex flex-col overflow-y-auto overflow-x-hidden bg-white"
+          className="modal-sidebar w-full md:w-2/5 h-full flex flex-col overflow-y-auto overflow-x-hidden bg-white/95 backdrop-blur-2xl"
         >
           <div className="flex flex-col flex-grow p-8 md:p-10">
 
             {/* Header */}
             <div className="mb-8">
-              <span className="inline-block px-3 py-1 bg-indigo-500/20 border border-indigo-500/30 text-indigo-300 text-xs font-bold rounded-lg uppercase tracking-wider mb-4 shadow-[0_0_10px_rgba(99,102,241,0.2)]">
+              <span className="inline-block px-3 py-1 bg-[#f16917]/10 border border-[#f16917]/20 text-[#f16917] text-[10px] font-bold rounded-full uppercase tracking-wider mb-4 shadow-[0_2px_10px_rgba(241,105,23,0.1)]">
                 {previewTemplate.category}
               </span>
-              <h2 className="text-3xl font-extrabold text-slate-900 leading-tight">{previewTemplate.title}</h2>
+              <h2 className="font-playfair text-3xl font-extrabold text-slate-900 leading-tight">{previewTemplate.title}</h2>
             </div>
 
             {/* Fields */}
-            <div className="flex-grow space-y-5">
+            <div className="flex-grow space-y-6">
               <div className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
-                <Wand2 className="w-4 h-4 text-indigo-400" />
+                <Wand2 className="w-4 h-4 text-[#fcbd24]" />
                 Customize PPT Data
               </div>
 
               {/* Generate with AI */}
               {!isDetecting && detectedPlaceholders.length > 0 && (
-                <div className="rounded-2xl border border-indigo-200 bg-gradient-to-b from-indigo-50 to-purple-50/50 p-4">
-                  <div className="flex items-center justify-between mb-2.5">
-                    <div className="flex items-center gap-2 text-sm font-bold text-indigo-700">
-                      <Sparkles className="w-4 h-4 text-indigo-500" />
+                <div className="rounded-2xl border border-[#f16917]/10 bg-gradient-to-b from-[#f16917]/[0.03] to-[#fcbd24]/[0.03] p-5 shadow-sm">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2 text-sm font-bold text-slate-800">
+                      <Sparkles className="w-4 h-4 text-[#f16917]" />
                       Generate with AI
                     </div>
-                    {aiProvider && (
-                      <span className="text-[10px] font-semibold uppercase tracking-wider text-indigo-600 bg-indigo-100 border border-indigo-200 px-2 py-0.5 rounded-md">
-                        {aiProvider === 'grok' ? 'xAI Grok' : 'Google Gemini'}
-                      </span>
-                    )}
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#f16917] bg-[#f16917]/10 border border-[#f16917]/20 px-2 py-0.5 rounded-md">
+                      Google Gemini
+                    </span>
                   </div>
 
                   <p className="text-xs text-slate-500 mb-3 leading-relaxed">
@@ -1052,14 +1068,32 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
                     value={aiBrief}
                     onChange={(e) => setAiBrief(e.target.value)}
                     placeholder="e.g. A quarterly update on our product launch: we shipped the new dashboard, grew users 30%, and are expanding to the EU next quarter…"
-                    className="w-full p-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none text-slate-800 placeholder-slate-400 transition-colors resize-none text-sm leading-relaxed"
+                    className="w-full p-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-[#f16917] focus:border-[#f16917] outline-none text-slate-800 placeholder-slate-400 transition-colors resize-none text-sm leading-relaxed mb-3"
                   />
 
                   {aiError && (
-                    <p className="mt-2 flex items-start gap-1.5 text-xs text-red-500">
-                      <AlertCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-                      {aiError}
-                    </p>
+                    <div className="mt-3 flex flex-col gap-2 text-xs text-red-600 bg-red-50/80 p-3 rounded-lg border border-red-100">
+                      <div className="flex items-start gap-1.5">
+                        <AlertCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                        <p className="leading-relaxed font-medium">
+                          {aiError === 'Rate limit exceeded. The AI provider is receiving too many requests.' 
+                            ? 'High Traffic Alert: The AI provider is receiving too many requests right now.' 
+                            : aiError}
+                        </p>
+                      </div>
+                      
+                      {aiError === 'Rate limit exceeded. The AI provider is receiving too many requests.' && (
+                        <div className="ml-5 p-2.5 bg-white/60 rounded-md border border-red-100/50">
+                          <p className="text-slate-700 mb-1.5">
+                            To skip the line and unlock uninterrupted generation, you can configure your own free personal API key.
+                          </p>
+                          <Link href="/settings" className="inline-flex items-center gap-1 font-bold text-red-600 hover:text-red-800 transition-colors">
+                            <Settings className="w-3.5 h-3.5" />
+                            Go to Settings
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   )}
 
 
@@ -1068,10 +1102,10 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
                     type="button"
                     onClick={handleGenerateAI}
                     disabled={isAiGenerating}
-                    className={`mt-3 w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all ${
+                    className={`mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm transition-all duration-300 ${
                       isAiGenerating
-                        ? 'bg-indigo-300 text-white cursor-not-allowed'
-                        : 'bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white shadow-[0_0_18px_rgba(99,102,241,0.35)] hover:shadow-[0_0_26px_rgba(99,102,241,0.55)] active:scale-[0.99]'
+                        ? 'bg-[#fcbd24]/50 text-white cursor-not-allowed shadow-none'
+                        : 'bg-gradient-to-r from-[#f16917] to-[#fcbd24] hover:from-[#e55d14] hover:to-[#e5aa20] text-white shadow-[0_4px_14px_rgba(241,105,23,0.35)] hover:shadow-[0_6px_20px_rgba(241,105,23,0.5)] active:scale-[0.98]'
                     }`}
                   >
                     {isAiGenerating ? (
@@ -1096,7 +1130,7 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
                   after detection completes AND the result is genuinely empty. */}
               {isDetecting ? (
                 <div className="flex flex-col items-center justify-center py-10 opacity-70">
-                  <svg className="animate-spin h-6 w-6 text-indigo-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <svg className="animate-spin h-6 w-6 text-[#f16917] mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
                   </svg>
@@ -1138,14 +1172,14 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
             </div>
 
             {/* Generate & Download */}
-            <div ref={formatMenuRef} className="relative mt-6 pt-6 border-t border-slate-200 flex gap-4">
+            <div ref={formatMenuRef} className="relative mt-6 pt-6 border-t border-slate-200/60 flex gap-4">
               <button
                 disabled={isGenerating}
                 onClick={() => setIsFormatMenuOpen(prev => !prev)}
-                className={`flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white px-6 py-4 rounded-2xl font-bold transition-all shadow-[0_0_20px_rgba(99,102,241,0.4)] transform ${
+                className={`flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-[#f16917] to-[#fcbd24] hover:from-[#e55d14] hover:to-[#e5aa20] text-white px-6 py-4 rounded-2xl font-bold transition-all duration-300 shadow-[0_6px_20px_rgba(241,105,23,0.35)] transform ${
                   isGenerating
-                    ? 'opacity-70 cursor-not-allowed animate-pulse'
-                    : 'hover:shadow-[0_0_30px_rgba(99,102,241,0.6)] hover:-translate-y-0.5'
+                    ? 'opacity-70 cursor-not-allowed animate-pulse shadow-none'
+                    : 'hover:shadow-[0_8px_30px_rgba(241,105,23,0.5)] hover:-translate-y-0.5 active:scale-[0.98]'
                 }`}
               >
                 {isGenerating ? (
@@ -1182,7 +1216,7 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
                         <button
                           key={f.value}
                           onClick={() => handleDownload(f.value)}
-                          className="flex-1 flex flex-col items-center gap-2 py-3.5 px-2 rounded-xl border border-slate-200 hover:border-indigo-400 hover:bg-indigo-50/50 hover:-translate-y-0.5 transition-all"
+                          className="flex-1 flex flex-col items-center gap-2 py-3.5 px-2 rounded-xl border border-slate-200 hover:border-[#f16917]/50 hover:bg-[#f16917]/5 hover:-translate-y-0.5 transition-all"
                         >
                           <Icon className="w-9 h-9" />
                           <span className="text-xs font-bold text-slate-700">{f.label}</span>
@@ -1198,6 +1232,12 @@ export default function TemplatePreviewModal({ previewTemplate, onClose }) {
         </div>
 
       </motion.div>
+
+      <ApiKeyPromptModal 
+        isOpen={showApiKeyPrompt} 
+        onClose={() => setShowApiKeyPrompt(false)} 
+        provider={aiProvider || 'gemini'} 
+      />
     </motion.div>
   );
 }

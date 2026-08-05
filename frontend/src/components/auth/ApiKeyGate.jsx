@@ -10,7 +10,7 @@ import ApiKeyGuide from '@/components/auth/ApiKeyGuide';
 
 const PROVIDERS = [
   { id: 'gemini', label: 'Google Gemini', prefix: 'AIza' },
-  { id: 'grok', label: 'xAI Grok', prefix: 'xai-' },
+  { id: 'gemini_new', label: 'Google Gemini (New)', prefix: 'AQ.' }
 ];
 
 // Global, mandatory popup. Mounted once in the root layout (inside AuthProvider).
@@ -69,7 +69,7 @@ export default function ApiKeyGate() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-[#0F172A]/40 backdrop-blur-sm"
+          className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-[#2a2a2a]/40 backdrop-blur-sm"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 16 }}
@@ -78,23 +78,23 @@ export default function ApiKeyGate() {
             transition={{ type: 'spring', stiffness: 340, damping: 28 }}
             className="relative w-full max-w-md bg-white rounded-3xl border border-[#E2E8F0] shadow-[0_24px_70px_rgba(15,23,42,0.18)] overflow-hidden max-h-[90vh] overflow-y-auto"
           >
-            <div className="absolute -top-24 -right-20 w-56 h-56 rounded-full bg-gradient-to-tr from-[#7C3AED]/15 to-[#A855F7]/15 blur-3xl pointer-events-none" />
+            <div className="absolute -top-24 -right-20 w-56 h-56 rounded-full bg-gradient-to-tr from-[#f16917]/15 to-[#fcbd24]/15 blur-3xl pointer-events-none" />
 
             <div className="relative z-[1] p-7">
-              <div className="w-12 h-12 mb-4 rounded-2xl bg-gradient-to-r from-[#7C3AED] to-[#A855F7] flex items-center justify-center shadow-[0_8px_24px_rgba(124,58,237,0.35)]">
+              <div className="w-12 h-12 mb-4 rounded-2xl bg-gradient-to-r from-[#f16917] to-[#fcbd24] flex items-center justify-center shadow-[0_8px_24px_rgba(124,58,237,0.35)]">
                 <KeyRound className="w-5 h-5 text-white" />
               </div>
 
-              <h2 className="text-xl font-extrabold text-[#0F172A] tracking-tight mb-1.5">
+              <h2 className="text-xl font-extrabold text-[#2a2a2a] tracking-tight mb-1.5">
                 Connect your AI key
               </h2>
               <p className="text-[#475569] text-sm leading-relaxed mb-5">
-                GoToSlide uses your own Gemini or Grok key to generate content. Add it now to
+                GoToSlide uses your own Gemini key to generate content. Add it now to
                 start creating decks.
               </p>
 
               {/* Provider toggle */}
-              <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl mb-4">
+              <div className="hidden grid-cols-2 gap-1.5 p-1.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl mb-4">
                 {PROVIDERS.map((p) => {
                   const isActive = provider === p.id;
                   return (
@@ -103,13 +103,13 @@ export default function ApiKeyGate() {
                       type="button"
                       onClick={() => setProvider(p.id)}
                       className={`relative px-4 py-2 text-sm font-semibold rounded-xl transition-all cursor-pointer ${
-                        isActive ? 'text-white' : 'text-[#475569] hover:text-[#0F172A]'
+                        isActive ? 'text-white' : 'text-[#475569] hover:text-[#2a2a2a]'
                       }`}
                     >
                       {isActive && (
                         <motion.div
                           layoutId="gateProviderPill"
-                          className="absolute inset-0 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] rounded-xl shadow-sm"
+                          className="absolute inset-0 bg-gradient-to-r from-[#f16917] to-[#fcbd24] rounded-xl shadow-sm"
                           transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                         />
                       )}
@@ -129,10 +129,10 @@ export default function ApiKeyGate() {
                   placeholder={`${activeProvider.prefix}…`}
                   spellCheck={false}
                   autoComplete="off"
-                  className={`w-full bg-white border text-[#0F172A] rounded-xl pl-10 pr-11 py-2.5 outline-none focus:ring-2 transition placeholder-[#94A3B8] font-mono text-sm ${
+                  className={`w-full bg-white border text-[#2a2a2a] rounded-xl pl-10 pr-11 py-2.5 outline-none focus:ring-2 transition placeholder-[#94A3B8] font-mono text-sm ${
                     keyLooksValid === false
                       ? 'border-amber-400 focus:border-amber-500 focus:ring-amber-200'
-                      : 'border-[#E2E8F0] focus:border-[#7C3AED] focus:ring-[#7C3AED]/15'
+                      : 'border-[#E2E8F0] focus:border-[#f16917] focus:ring-[#f16917]/15'
                   }`}
                 />
                 <button
@@ -165,7 +165,7 @@ export default function ApiKeyGate() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-semibold py-2.5 rounded-xl hover:shadow-lg hover:shadow-purple-500/25 active:scale-[0.99] transition-all disabled:opacity-50 cursor-pointer"
+                className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#f16917] to-[#fcbd24] text-white font-semibold py-2.5 rounded-xl hover:shadow-lg hover:shadow-purple-500/25 active:scale-[0.99] transition-all disabled:opacity-50 cursor-pointer"
               >
                 {saving ? (
                   <>

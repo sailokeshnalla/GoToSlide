@@ -9,10 +9,21 @@ const TRENDING = ['Loop', 'Mind Map', 'Timeline', 'Venn Diagram'];
 // ── Particle config ─────────────────────────────────────────────
 const DOT_SPACING = 26;
 const DOT_R       = 1.1;
-const DOT_PALETTE = [[99,102,241],[168,85,247],[236,72,153],[129,140,248],[196,181,253]];
+const DOT_PALETTE = [
+  [241, 105, 23],
+  [252, 189, 36],
+  [255, 165, 0],
+  [250, 128, 114],
+  [255, 215, 0],
+];
 const P_COUNT     = 58;
 const LINK_DIST   = 115;
-const P_COLORS    = ['rgba(99,102,241,','rgba(168,85,247,','rgba(236,72,153,','rgba(129,140,248,'];
+const P_COLORS = [
+  'rgba(241,105,23,',
+  'rgba(252,189,36,',
+  'rgba(255,165,0,',
+  'rgba(250,128,114,',
+];
 // ────────────────────────────────────────────────────────────────
 
 export default function HeroSection({ searchQuery, setSearchQuery, onSearch }) {
@@ -107,7 +118,7 @@ export default function HeroSection({ searchQuery, setSearchQuery, onSearch }) {
           if (dist < LINK_DIST) {
             ctx.beginPath();
             ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = `rgba(99,102,241,${0.10 * (1 - dist / LINK_DIST)})`;
+            ctx.strokeStyle = `rgba(241, 105, 23,${0.10 * (1 - dist / LINK_DIST)})`;
             ctx.lineWidth = 0.6;
             ctx.stroke();
           }
@@ -166,73 +177,55 @@ export default function HeroSection({ searchQuery, setSearchQuery, onSearch }) {
 
         {/* Badge */}
         <motion.span
-          initial={{ opacity: 0, y: -8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full border border-indigo-100 text-indigo-600 text-sm font-medium mb-8"
-          style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
+          initial={{ opacity: 0, y: 14, filter: 'blur(14px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1, delay: 0.05, ease: [0.2, 0.6, 0.2, 1] }}
+          className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full border border-[#fcbd24]/30 text-[#f16917] text-[13px] font-medium mb-8 bg-white/50 backdrop-blur-sm"
         >
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#fcbd24] opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-[#f16917]" />
           </span>
-          Next-Gen Graphic Intelligence
+          <em className="font-serif italic font-normal tracking-wide">Next-Gen Graphic Intelligence</em>
         </motion.span>
 
         {/* Heading */}
         <h1
-          className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-[1.12] text-[#0f0f1a]"
-          style={{ fontFamily: "'Playfair Display', Georgia, 'Times New Roman', serif" }}
+          className="text-[clamp(40px,6.2vw,64px)] font-bold tracking-tight mb-6 leading-[1.06] text-[#0f0f1a]"
         >
           <motion.span
             className="block"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.28, ease: [0.22, 0.61, 0.36, 1] }}
+            initial={{ opacity: 0, y: 14, filter: 'blur(14px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1, delay: 0.15, ease: [0.2, 0.6, 0.2, 1] }}
           >
             Elevate your vision
           </motion.span>
 
-          <span className="block mt-1">
-            {['with\u00a0', 'GoToSlide\u00a0'].map((word, i) => (
-              <motion.span
-                key={word}
-                className={
-                  i === 0
-                    ? 'inline-block text-[#0f0f1a]'
-                    : 'inline-block text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500'
-                }
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.55,
-                  delay: 0.52 + i * 0.2,
-                  ease: [0.22, 0.61, 0.36, 1],
-                }}
-              >
-                {word}
-              </motion.span>
-            ))}
-          </span>
+          <motion.span
+            className="block mt-1"
+            initial={{ opacity: 0, y: 14, filter: 'blur(14px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 1, delay: 0.25, ease: [0.2, 0.6, 0.2, 1] }}
+          >
+            with <span className="shine-text font-extrabold tracking-tight">GoToSlide</span>
+          </motion.span>
         </h1>
 
-        {/* Subtext */}
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.1 }}
-          className="text-lg sm:text-xl text-slate-500 max-w-2xl mx-auto mb-10"
-          style={{ fontFamily: "'EB Garamond', Georgia, serif", lineHeight: 1.7 }}
+          initial={{ opacity: 0, y: 14, filter: 'blur(14px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1, delay: 0.35, ease: [0.2, 0.6, 0.2, 1] }}
+          className="text-[clamp(15px,1.5vw,17px)] font-medium leading-[1.6] tracking-tight text-slate-500 max-w-[720px] mx-auto mb-10"
         >
-          Stunning, premium templates for Funnel, Timelines, Org Tree and more.
-          Download in seconds, customise in minutes.
+          Turn your ideas into polished, presentation-ready visuals with AI-powered templates for funnels, timelines, organizational charts, and more. Create, customize, and download professional slides in minutes.
         </motion.p>
 
         {/* Search bar */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.3 }}
+          initial={{ opacity: 0, y: 14, filter: 'blur(14px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 1, delay: 0.45, ease: [0.2, 0.6, 0.2, 1] }}
         >
           <div onKeyDown={handleKeyDown}>
             <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
@@ -240,16 +233,14 @@ export default function HeroSection({ searchQuery, setSearchQuery, onSearch }) {
 
           {/* Trending tags */}
           <div
-            className="mt-5 flex flex-wrap justify-center items-center gap-2 text-xs sm:text-sm text-[#475569]"
-            style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
+            className="mt-6 flex flex-wrap justify-center items-center gap-2 text-[13px]"
           >
-            <span className="font-medium italic">Trending searches:</span>
+            <span className="font-medium text-slate-400 mr-2">Trending searches:</span>
             {TRENDING.map((tag) => (
               <button
                 key={tag}
                 onClick={() => handleTrending(tag)}
-                className="px-3 py-1 rounded-full bg-[#F8FAFC] border border-[#E2E8F0] hover:border-[#6366F1] hover:text-[#6366F1] hover:bg-[#6366F1]/5 transition-all cursor-pointer"
-                style={{ fontFamily: "'EB Garamond', Georgia, serif" }}
+                className="relative overflow-hidden inline-flex shrink-0 items-center whitespace-nowrap rounded-lg px-3 py-1.5 font-medium text-slate-500 transition-colors duration-150 ease-in-out hover:bg-[#f16917]/10 hover:text-[#f16917] bg-[#f16917]/5 backdrop-blur-sm"
               >
                 {tag}
               </button>
@@ -261,6 +252,28 @@ export default function HeroSection({ searchQuery, setSearchQuery, onSearch }) {
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=EB+Garamond:wght@400;500&display=swap');
 
+        .shine-text {
+          background: linear-gradient(
+            110deg,
+            #f16917 0%,
+            #f16917 40%,
+            #fff 50%,
+            #f16917 60%,
+            #fcbd24 100%
+          );
+          background-size: 200% auto;
+          color: transparent;
+          -webkit-background-clip: text;
+          background-clip: text;
+          animation: shine 3.5s linear infinite;
+        }
+
+        @keyframes shine {
+          to {
+            background-position: -200% center;
+          }
+        }
+
         .float-orb {
           position: absolute;
           border-radius: 50%;
@@ -270,40 +283,40 @@ export default function HeroSection({ searchQuery, setSearchQuery, onSearch }) {
           top: -120px; left: -80px;
           width: clamp(260px, 40vw, 420px);
           height: clamp(260px, 40vw, 420px);
-          background: radial-gradient(circle at 38% 38%, rgba(167,139,250,0.30), rgba(129,140,248,0.13) 55%, transparent 75%);
+          background: radial-gradient(circle at 38% 38%, rgba(241, 105, 23, 0.15), rgba(252, 189, 36, 0.1) 55%, transparent 75%);
           animation: floatOrb1 18s ease-in-out infinite;
         }
         .orb-2 {
           top: -60px; right: -60px;
           width: clamp(200px, 34vw, 340px);
           height: clamp(200px, 34vw, 340px);
-          background: radial-gradient(circle at 60% 40%, rgba(240,171,252,0.24), rgba(196,181,253,0.11) 55%, transparent 75%);
+          background: radial-gradient(circle at 60% 40%, rgba(252, 189, 36, 0.15), rgba(241, 105, 23, 0.1) 55%, transparent 75%);
           animation: floatOrb2 22s ease-in-out infinite;
         }
         .orb-3 {
           bottom: -80px; left: 10%;
           width: clamp(180px, 28vw, 280px);
           height: clamp(180px, 28vw, 280px);
-          background: radial-gradient(circle at 50% 50%, rgba(253,230,138,0.22), rgba(251,207,232,0.13) 55%, transparent 75%);
+          background: radial-gradient(circle at 50% 50%, rgba(252, 189, 36, 0.12), rgba(241, 105, 23, 0.08) 55%, transparent 75%);
           animation: floatOrb3 26s ease-in-out infinite;
         }
         .orb-4 {
           top: 30%; right: 8%;
           width: clamp(140px, 22vw, 220px);
           height: clamp(140px, 22vw, 220px);
-          background: radial-gradient(circle at 45% 55%, rgba(165,180,252,0.24), rgba(221,214,254,0.11) 60%, transparent 80%);
+          background: radial-gradient(circle at 45% 55%, rgba(241, 105, 23, 0.12), rgba(252, 189, 36, 0.08) 60%, transparent 80%);
           animation: floatOrb4 20s ease-in-out infinite;
         }
         .orb-5 {
           bottom: 10%; right: 20%;
           width: 160px; height: 160px;
-          background: radial-gradient(circle at 40% 40%, rgba(196,181,253,0.26), transparent 70%);
+          background: radial-gradient(circle at 40% 40%, rgba(252, 189, 36, 0.12), transparent 70%);
           animation: floatOrb5 15s ease-in-out infinite;
         }
         .orb-6 {
           top: 55%; left: 5%;
           width: 100px; height: 100px;
-          background: radial-gradient(circle at 50% 50%, rgba(167,139,250,0.22), transparent 70%);
+          background: radial-gradient(circle at 50% 50%, rgba(241, 105, 23, 0.12), transparent 70%);
           animation: floatOrb6 12s ease-in-out infinite;
         }
         @keyframes floatOrb1 {

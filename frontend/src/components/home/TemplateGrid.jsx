@@ -48,7 +48,7 @@ export default function TemplateGrid({ templates, loading, user }) {
         <div className="w-16 h-16 bg-[#F8FAFC] border border-[#E2E8F0] rounded-2xl flex items-center justify-center mb-6 shadow-sm">
           <LayoutGrid className="w-6 h-6 text-[#94A3B8]" />
         </div>
-        <h3 className="text-xl font-bold text-[#0F172A] mb-2">No templates found</h3>
+        <h3 className="text-xl font-bold text-[#2a2a2a] mb-2">No templates found</h3>
         <p className="text-[#475569] max-w-md text-sm">
           We couldn&apos;t find any premium templates matching your search. Try another keyword or browse our categories above.
         </p>

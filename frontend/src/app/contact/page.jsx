@@ -21,7 +21,7 @@ const FAQS = [
           href="https://mail.google.com/mail/?view=cm&fs=1&to=support@inteleraai.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-[#7C3AED] underline"
+          className="text-[#f16917] underline"
         >
           support@inteleraai.com
         </a>{' '}
@@ -65,7 +65,7 @@ export default function Contact() {
     <div className="relative overflow-hidden min-h-screen flex flex-col bg-gradient-to-br from-[#F8FAFC] via-[#FAFAFF] to-[#F5F3FF]">
       <BubbleBackground />
 
-      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#0F172A] flex-1 w-full">
+      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#2a2a2a] flex-1 w-full">
         <h1 className="text-4xl font-extrabold mb-2">Support and Contact</h1>
         <p className="text-[#64748B] mb-10">
           Answers to common questions, and a way to reach us directly.
@@ -77,7 +77,7 @@ export default function Contact() {
             <div key={i} className="border-b border-[#E2E8F0]">
               <button
                 onClick={() => toggle(i)}
-                className="w-full flex items-center justify-between text-left py-5 font-bold text-[#0F172A] hover:text-[#7C3AED] transition-colors"
+                className="w-full flex items-center justify-between text-left py-5 font-bold text-[#2a2a2a] hover:text-[#f16917] transition-colors"
               >
                 <span>{item.q}</span>
                 <svg

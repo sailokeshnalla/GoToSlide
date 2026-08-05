@@ -42,8 +42,8 @@ export default function LoginPage() {
     <div className="relative min-h-screen flex items-center justify-center px-4 py-12 bg-white overflow-hidden">
       {/* Ambient brand background */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[10%] w-[460px] h-[460px] rounded-full bg-gradient-to-tr from-[#7C3AED]/10 to-[#6366F1]/10 blur-[110px]" />
-        <div className="absolute bottom-[-15%] right-[8%] w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-[#A855F7]/10 to-[#6366F1]/10 blur-[110px]" />
+        <div className="absolute top-[-10%] left-[10%] w-[460px] h-[460px] rounded-full bg-gradient-to-tr from-[#f16917]/10 to-[#f16917]/10 blur-[110px]" />
+        <div className="absolute bottom-[-15%] right-[8%] w-[420px] h-[420px] rounded-full bg-gradient-to-tr from-[#fcbd24]/10 to-[#f16917]/10 blur-[110px]" />
       </div>
 
       <motion.div
@@ -55,22 +55,22 @@ export default function LoginPage() {
         {/* Back */}
         <button
           onClick={() => router.push('/')}
-          className="flex items-center gap-1.5 text-[#475569] hover:text-[#0F172A] transition text-sm mb-7 cursor-pointer"
+          className="flex items-center gap-1.5 text-[#475569] hover:text-[#2a2a2a] transition text-sm mb-7 cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> Back to home
         </button>
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 mb-8 justify-center group">
-          <div className="w-9 h-9 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] rounded-lg flex items-center justify-center font-bold text-white shadow-sm transition-transform group-hover:scale-105">
+          <div className="w-9 h-9 bg-gradient-to-r from-[#f16917] to-[#fcbd24] rounded-lg flex items-center justify-center font-bold text-white shadow-sm transition-transform group-hover:scale-105">
             G
           </div>
-          <span className="text-[#0F172A] font-extrabold text-xl tracking-tight">
-            GoTo<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] to-[#A855F7]">Slide</span>
+          <span className="text-[#2a2a2a] font-extrabold text-xl tracking-tight">
+            GoTo<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f16917] to-[#fcbd24]">Slide</span>
           </span>
         </Link>
 
-        <h1 className="text-[#0F172A] text-2xl font-extrabold text-center tracking-tight mb-1.5">
+        <h1 className="text-[#2a2a2a] text-2xl font-extrabold text-center tracking-tight mb-1.5">
           Welcome back
         </h1>
         <p className="text-[#475569] text-center mb-7 text-sm">
@@ -80,7 +80,7 @@ export default function LoginPage() {
         {/* Google */}
         <button
           onClick={handleGoogle}
-          className="w-full flex items-center justify-center gap-3 bg-white text-[#0F172A] font-medium py-2.5 rounded-xl mb-5 border border-[#E2E8F0] hover:bg-[#F8FAFC] hover:border-[#7C3AED]/30 active:scale-[0.99] transition-all cursor-pointer"
+          className="w-full flex items-center justify-center gap-3 bg-white text-[#2a2a2a] font-medium py-2.5 rounded-xl mb-5 border border-[#E2E8F0] hover:bg-[#F8FAFC] hover:border-[#f16917]/30 active:scale-[0.99] transition-all cursor-pointer"
         >
           <img src="https://www.google.com/favicon.ico" className="w-5 h-5" alt="" />
           Continue with Google
@@ -104,7 +104,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                className="w-full bg-white border border-[#E2E8F0] text-[#0F172A] rounded-xl pl-10 pr-4 py-2.5 outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/15 transition placeholder-[#94A3B8]"
+                className="w-full bg-white border border-[#E2E8F0] text-[#2a2a2a] rounded-xl pl-10 pr-4 py-2.5 outline-none focus:border-[#f16917] focus:ring-2 focus:ring-[#f16917]/15 transition placeholder-[#94A3B8]"
               />
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-white border border-[#E2E8F0] text-[#0F172A] rounded-xl pl-10 pr-11 py-2.5 outline-none focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/15 transition placeholder-[#94A3B8]"
+                className="w-full bg-white border border-[#E2E8F0] text-[#2a2a2a] rounded-xl pl-10 pr-11 py-2.5 outline-none focus:border-[#f16917] focus:ring-2 focus:ring-[#f16917]/15 transition placeholder-[#94A3B8]"
               />
               <button
                 type="button"
@@ -137,7 +137,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white font-semibold py-2.5 rounded-xl hover:shadow-lg hover:shadow-purple-500/25 active:scale-[0.99] transition-all disabled:opacity-50 cursor-pointer"
+            className="w-full bg-gradient-to-r from-[#f16917] to-[#fcbd24] text-white font-semibold py-2.5 rounded-xl hover:shadow-lg hover:shadow-purple-500/25 active:scale-[0.99] transition-all disabled:opacity-50 cursor-pointer"
           >
             {loading ? 'Signing in…' : 'Sign In'}
           </button>
@@ -145,7 +145,7 @@ export default function LoginPage() {
 
         <p className="text-[#475569] text-sm text-center mt-5">
           Don&apos;t have an account?{' '}
-          <Link href="/signup" className="text-[#7C3AED] font-semibold hover:underline">
+          <Link href="/signup" className="text-[#f16917] font-semibold hover:underline">
             Sign up
           </Link>
         </p>

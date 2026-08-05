@@ -17,7 +17,7 @@ export async function POST(request) {
     const allowed = ['pptx', 'pdf', 'image'];
     const requestedFormat = allowed.includes(format) ? format : 'pptx';
 
-    const backendUrl = process.env.BACKEND_URL || 'http://127.0.0.1:8000';
+    const backendUrl = (process.env.BACKEND_URL || 'http://127.0.0.1:8000').replace(/\/$/, '');
 
     const response = await fetch(`${backendUrl}/replace-pptx`, {
       method: 'POST',

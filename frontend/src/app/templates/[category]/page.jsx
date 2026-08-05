@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense, useRef } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
@@ -33,8 +33,8 @@ const CATEGORY_META = {
   'Loop': {
     label: 'Loop',
     description: 'Circular roadmaps, iterative cycles, continuous improvement frameworks, and recurring business processes.',
-    color: '#7C3AED',
-    bg: '#7C3AED10',
+    color: '#f16917',
+    bg: '#f1691710',
     icon: Infinity,
   },
   'Matrix': {
@@ -68,8 +68,8 @@ const CATEGORY_META = {
   'Process & Flow': {
     label: 'Process & Flow',
     description: 'Business workflows, operational processes, decision trees, and process automation diagrams.',
-    color: '#A855F7',
-    bg: '#A855F710',
+    color: '#fcbd24',
+    bg: '#fcbd2410',
     icon: FlowIcon,
   },
   'Steps': {
@@ -82,15 +82,15 @@ const CATEGORY_META = {
   'Timeline': {
     label: 'Timelines',
     description: 'Chronological events, project milestones, company history, and strategic planning schedules.',
-    color: '#6366F1',
-    bg: '#6366F110',
+    color: '#f16917',
+    bg: '#f1691710',
     icon: Milestone,
   },
   'Venn Diagram': {
     label: 'Venn Diagram',
     description: 'Comparisons, overlaps, intersections, relationships, and shared characteristics between concepts.',
-    color: '#8B5CF6',
-    bg: '#8B5CF610',
+    color: '#fcbd24',
+    bg: '#fcbd2410',
     icon: Circle,
   },
 };
@@ -130,67 +130,14 @@ function SkeletonGrid() {
   );
 }
 
-// ─── Pagination ───────────────────────────────────────────────────────────────
-
-function Pagination({ currentPage, totalPages, onPageChange }) {
-  if (totalPages <= 1) return null;
-
-  const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
-  const visiblePages = pages.filter(
-    (p) => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1
-  );
-  const withEllipsis = [];
-  let prev = 0;
-  for (const p of visiblePages) {
-    if (p - prev > 1) withEllipsis.push('...');
-    withEllipsis.push(p);
-    prev = p;
-  }
-
-  return (
-    <div className="flex items-center justify-center gap-2 mt-12">
-      <button
-        onClick={() => onPageChange(currentPage - 1)}
-        disabled={currentPage === 1}
-        className="w-9 h-9 flex items-center justify-center rounded-xl border border-[#E2E8F0] bg-white text-[#475569] hover:border-[#7C3AED] hover:text-[#7C3AED] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </button>
-
-      {withEllipsis.map((item, i) =>
-        item === '...' ? (
-          <span key={`e-${i}`} className="w-9 h-9 flex items-center justify-center text-[#94A3B8] text-sm">…</span>
-        ) : (
-          <button
-            key={item}
-            onClick={() => onPageChange(item)}
-            className={`w-9 h-9 flex items-center justify-center rounded-xl text-sm font-semibold transition-all ${
-              currentPage === item
-                ? 'bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white shadow-md'
-                : 'border border-[#E2E8F0] bg-white text-[#475569] hover:border-[#7C3AED] hover:text-[#7C3AED]'
-            }`}
-          >
-            {item}
-          </button>
-        )
-      )}
-
-      <button
-        onClick={() => onPageChange(currentPage + 1)}
-        disabled={currentPage === totalPages}
-        className="w-9 h-9 flex items-center justify-center rounded-xl border border-[#E2E8F0] bg-white text-[#475569] hover:border-[#7C3AED] hover:text-[#7C3AED] disabled:opacity-30 disabled:cursor-not-allowed transition-all"
-      >
-        <ChevronRight className="w-4 h-4" />
-      </button>
-    </div>
-  );
-}
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
-export default function CategoryPage() {
+function CategoryContent() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const previewId = searchParams.get('preview');
 
   const categorySlug = decodeURIComponent(params.category || '');
   const meta = CATEGORY_META[categorySlug];
@@ -199,7 +146,8 @@ export default function CategoryPage() {
 
   const [templates, setTemplates] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(12);
+  const loadMoreRef = useRef(null);
   const [previewTemplate, setPreviewTemplate] = useState(null);
   const [authPromptTemplate, setAuthPromptTemplate] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -208,7 +156,7 @@ export default function CategoryPage() {
   useEffect(() => {
     if (!meta) return;
     setLoading(true);
-    setCurrentPage(1);
+    setVisibleCount(12);
 
     const tableName = getTableForCategory(categorySlug);
 
@@ -238,11 +186,51 @@ export default function CategoryPage() {
 
   useEffect(() => { setMounted(true); }, []);
 
+  useEffect(() => {
+    if (templates.length > 0) {
+      if (previewId) {
+        const t = templates.find((tmpl) => tmpl.id === previewId);
+        if (t) setPreviewTemplate(t);
+      } else {
+        setPreviewTemplate(null);
+      }
+    }
+  }, [previewId, templates]);
+
+  const openPreview = (template) => {
+    router.push(`/templates/${encodeURIComponent(categorySlug)}?preview=${template.id}`, { scroll: false });
+  };
+
+  const closePreview = () => {
+    router.push(`/templates/${encodeURIComponent(categorySlug)}`, { scroll: false });
+  };
+
+  const hasMore = visibleCount < templates.length;
+  
+  useEffect(() => {
+    if (!hasMore) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisibleCount((prev) => prev + 12);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (loadMoreRef.current) {
+      observer.observe(loadMoreRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [hasMore, templates.length]);
+
   if (!meta) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center text-center px-4">
-        <p className="text-2xl font-bold text-[#0F172A] mb-2">Category not found</p>
-        <Link href="/" className="mt-4 inline-flex items-center gap-2 text-[#7C3AED] font-semibold hover:underline">
+        <p className="text-2xl font-bold text-[#2a2a2a] mb-2">Category not found</p>
+        <Link href="/" className="mt-4 inline-flex items-center gap-2 text-[#f16917] font-semibold hover:underline">
           <ArrowLeft className="w-4 h-4" /> Back to home
         </Link>
       </div>
@@ -251,24 +239,10 @@ export default function CategoryPage() {
 
   const showIntro = !introTimeDone || loading;
 
-  const totalPages = Math.ceil(templates.length / TEMPLATES_PER_PAGE);
-  const paginated = templates.slice(
-    (currentPage - 1) * TEMPLATES_PER_PAGE,
-    currentPage * TEMPLATES_PER_PAGE
-  );
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const visibleTemplates = templates.slice(0, visibleCount);
 
   const handleBack = () => {
-    if (currentPage > 1) {
-      setCurrentPage((p) => p - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      router.push('/');
-    }
+    router.push('/');
   };
 
   const CategoryIcon = meta.icon;
@@ -286,10 +260,10 @@ export default function CategoryPage() {
 
           <button
             onClick={handleBack}
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#475569] hover:text-[#7C3AED] transition-colors mb-6 group"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-[#475569] hover:text-[#f16917] transition-colors mb-6 group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
-            {currentPage > 1 ? 'Back' : 'Back to Home'}
+            Back to Home
           </button>
 
           <div className="flex items-center gap-4">
@@ -304,7 +278,7 @@ export default function CategoryPage() {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35 }}
-                className="text-3xl sm:text-4xl font-extrabold text-[#0F172A] tracking-tight"
+                className="text-3xl sm:text-4xl font-extrabold text-[#2a2a2a] tracking-tight"
               >
                 {meta.label}
               </motion.h1>
@@ -338,8 +312,8 @@ export default function CategoryPage() {
                   onClick={() => router.push(`/templates/${encodeURIComponent(cat)}`)}
                   className={`px-4 py-2 text-sm font-semibold rounded-xl transition-all duration-200 whitespace-nowrap ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#7C3AED] to-[#A855F7] text-white shadow-md'
-                      : 'text-[#475569] hover:text-[#0F172A] hover:bg-slate-100'
+                      ? 'bg-gradient-to-r from-[#f16917] to-[#fcbd24] text-white shadow-md'
+                      : 'text-[#475569] hover:text-[#2a2a2a] hover:bg-slate-100'
                   }`}
                 >
                   {CATEGORY_META[cat].label}
@@ -366,46 +340,37 @@ export default function CategoryPage() {
             >
               <CategoryIcon className="w-6 h-6 stroke-[2]" />
             </div>
-            <h3 className="text-xl font-bold text-[#0F172A] mb-2">No templates yet</h3>
+            <h3 className="text-xl font-bold text-[#2a2a2a] mb-2">No templates yet</h3>
             <p className="text-[#475569] text-sm max-w-sm">
               We're adding new {meta.label} templates soon. Browse another category in the meantime.
             </p>
           </motion.div>
         ) : (
           <>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentPage}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -6 }}
-                transition={{ duration: 0.25 }}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-              >
-                {paginated.map((template, index) => (
-                  <TemplateCard
-                    key={template.id}
-                    template={template}
-                    index={index}
-                    isAuthenticated={!!user}
-                    onPreview={() => setPreviewTemplate(template)}
-                    onRequireAuth={() => setAuthPromptTemplate(template)}
-                  />
-                ))}
-              </motion.div>
-            </AnimatePresence>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {visibleTemplates.map((template, index) => (
+                <TemplateCard
+                  key={template.id}
+                  template={template}
+                  index={index % 12}
+                  isAuthenticated={!!user}
+                  onPreview={() => openPreview(template)}
+                  onRequireAuth={() => setAuthPromptTemplate(template)}
+                />
+              ))}
+            </div>
 
-            {totalPages > 1 && (
-              <p className="text-center text-sm text-[#94A3B8] mt-8">
-                Page {currentPage} of {totalPages} · {templates.length} total templates
-              </p>
+            {hasMore && (
+              <div ref={loadMoreRef} className="py-12 flex justify-center items-center w-full">
+                <div className="w-8 h-8 border-4 border-[#f16917]/30 border-t-[#f16917] rounded-full animate-spin" />
+              </div>
             )}
 
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
+            {!hasMore && templates.length > 0 && (
+              <p className="text-center text-sm text-[#94A3B8] mt-12 pb-8">
+                You've reached the end! {templates.length} templates available
+              </p>
+            )}
           </>
         )}
       </div>
@@ -417,7 +382,7 @@ export default function CategoryPage() {
             {previewTemplate && (
               <TemplatePreviewModal
                 previewTemplate={previewTemplate}
-                onClose={() => setPreviewTemplate(null)}
+                onClose={closePreview}
               />
             )}
           </AnimatePresence>
@@ -433,5 +398,13 @@ export default function CategoryPage() {
         document.body
       )}
     </div>
+  );
+}
+
+export default function CategoryPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#F8FAFC]" />}>
+      <CategoryContent />
+    </Suspense>
   );
 }

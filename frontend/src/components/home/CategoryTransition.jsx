@@ -4,16 +4,16 @@ import { motion } from 'framer-motion';
 
 const META = {
   'Funnel':              { color: '#10B981', label: 'Funnels' },
-  'Loop':                { color: '#7C3AED', label: 'Loops' },
+  'Loop':                { color: '#f16917', label: 'Loops' },
   'Matrix':              { color: '#10B981', label: 'Matrices' },
   'Mind Map':            { color: '#06B6D4', label: 'Mind Maps' },
   'n point infographic': { color: '#F59E0B', label: 'Infographics' },
   'Organizational Tree': { color: '#F59E0B', label: 'Org Trees' },
-  'Process & Flow':      { color: '#A855F7', label: 'Process & Flow' },
+  'Process & Flow':      { color: '#fcbd24', label: 'Process & Flow' },
   'Steps':   { color: '#EF4444', label: 'Steps' },
-  'Timeline':            { color: '#6366F1', label: 'Timelines' },
-  'Venn Diagram':        { color: '#8B5CF6', label: 'Venn Diagrams' },
-  'All':                 { color: '#7C3AED', label: 'Templates' },
+  'Timeline':            { color: '#f16917', label: 'Timelines' },
+  'Venn Diagram':        { color: '#fcbd24', label: 'Venn Diagrams' },
+  'All':                 { color: '#f16917', label: 'Templates' },
 };
 
 const ease = [0.22, 1, 0.36, 1];

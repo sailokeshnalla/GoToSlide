@@ -6,21 +6,21 @@ const DOT_SPACING = 26;
 const DOT_R = 1.1;
 
 const DOT_PALETTE = [
-  [99, 102, 241],
-  [168, 85, 247],
-  [236, 72, 153],
-  [129, 140, 248],
-  [196, 181, 253],
+  [241, 105, 23],
+  [252, 189, 36],
+  [255, 165, 0],
+  [250, 128, 114],
+  [255, 215, 0],
 ];
 
 const P_COUNT = 58;
 const LINK_DIST = 115;
 
 const P_COLORS = [
-  'rgba(99,102,241,',
-  'rgba(168,85,247,',
-  'rgba(236,72,153,',
-  'rgba(129,140,248,',
+  'rgba(241,105,23,',
+  'rgba(252,189,36,',
+  'rgba(255,165,0,',
+  'rgba(250,128,114,',
 ];
 
 export default function PremiumBackground() {
@@ -183,9 +183,7 @@ export default function PremiumBackground() {
             ctx.lineTo(b.x, b.y);
 
             ctx.strokeStyle = `rgba(
-              99,
-              102,
-              241,
+              241, 105, 23,
               ${0.1 * (1 - dist / LINK_DIST)}
             )`;
 
@@ -260,8 +258,8 @@ export default function PremiumBackground() {
           height: clamp(260px, 40vw, 420px);
           background: radial-gradient(
             circle at 38% 38%,
-            rgba(167, 139, 250, 0.3),
-            rgba(129, 140, 248, 0.13) 55%,
+            rgba(241, 105, 23, 0.15),
+            rgba(252, 189, 36, 0.1) 55%,
             transparent 75%
           );
           animation: floatOrb1 18s ease-in-out infinite;
@@ -274,8 +272,8 @@ export default function PremiumBackground() {
           height: clamp(200px, 34vw, 340px);
           background: radial-gradient(
             circle at 60% 40%,
-            rgba(240, 171, 252, 0.24),
-            rgba(196, 181, 253, 0.11) 55%,
+            rgba(252, 189, 36, 0.15),
+            rgba(241, 105, 23, 0.1) 55%,
             transparent 75%
           );
           animation: floatOrb2 22s ease-in-out infinite;
@@ -288,8 +286,8 @@ export default function PremiumBackground() {
           height: clamp(180px, 28vw, 280px);
           background: radial-gradient(
             circle at 50% 50%,
-            rgba(253, 230, 138, 0.22),
-            rgba(251, 207, 232, 0.13) 55%,
+            rgba(252, 189, 36, 0.12),
+            rgba(241, 105, 23, 0.08) 55%,
             transparent 75%
           );
           animation: floatOrb3 26s ease-in-out infinite;
@@ -302,8 +300,8 @@ export default function PremiumBackground() {
           height: clamp(140px, 22vw, 220px);
           background: radial-gradient(
             circle at 45% 55%,
-            rgba(165, 180, 252, 0.24),
-            rgba(221, 214, 254, 0.11) 60%,
+            rgba(241, 105, 23, 0.12),
+            rgba(252, 189, 36, 0.08) 60%,
             transparent 80%
           );
           animation: floatOrb4 20s ease-in-out infinite;
@@ -316,7 +314,7 @@ export default function PremiumBackground() {
           height: 160px;
           background: radial-gradient(
             circle at 40% 40%,
-            rgba(196, 181, 253, 0.26),
+            rgba(252, 189, 36, 0.12),
             transparent 70%
           );
           animation: floatOrb5 15s ease-in-out infinite;
@@ -329,7 +327,7 @@ export default function PremiumBackground() {
           height: 100px;
           background: radial-gradient(
             circle at 50% 50%,
-            rgba(167, 139, 250, 0.22),
+            rgba(241, 105, 23, 0.12),
             transparent 70%
           );
           animation: floatOrb6 12s ease-in-out infinite;

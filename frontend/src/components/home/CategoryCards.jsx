@@ -32,7 +32,7 @@ const CATEGORIES = [
     name: 'Loop',
     description: 'Circular roadmaps, iterative cycles, continuous improvement frameworks, and recurring business processes.',
     icon: Infinity,
-    color: '#7C3AED',
+    color: '#f16917',
     keywords: ['loop', 'cycle', 'iteration', 'continuous improvement', 'roadmap'],
   },
   {
@@ -72,7 +72,7 @@ const CATEGORIES = [
     name: 'Process & Flow',
     description: 'Business workflows, operational processes, decision trees, and process automation diagrams.',
     icon: ChevronRight,
-    color: '#A855F7',
+    color: '#fcbd24',
     keywords: ['process', 'flow', 'workflow', 'diagram', 'automation'],
   },
   {
@@ -88,7 +88,7 @@ const CATEGORIES = [
     name: 'Timelines',
     description: 'Chronological events, project milestones, company history, and strategic planning schedules.',
     icon: Milestone,
-    color: '#6366F1',
+    color: '#f16917',
     keywords: ['timeline', 'schedule', 'history', 'project', 'milestone'],
   },
   {
@@ -96,7 +96,7 @@ const CATEGORIES = [
     name: 'Venn Diagram',
     description: 'Comparisons, overlaps, intersections, relationships, and shared characteristics between concepts.',
     icon: Circle,
-    color: '#8B5CF6',
+    color: '#fcbd24',
     keywords: ['venn', 'comparison', 'overlap', 'intersection', 'relationship'],
   },
 ];
@@ -111,7 +111,7 @@ function CountBadge({ loading, count }) {
   return (
     <span
       className="text-[10px] font-semibold px-2 py-0.5 rounded-md"
-      style={{ color: '#6366F1', backgroundColor: '#6366F10F' }}
+      style={{ color: '#f16917', backgroundColor: '#f169171A' }}
     >
       {count.toLocaleString()} {count === 1 ? 'template' : 'templates'}
     </span>
@@ -181,11 +181,17 @@ export default function CategoryCards({ searchQuery = '' }) {
   const noResults = hasQuery && visibleCategories.length === 0;
 
   return (
-    <section id="categories" className="py-16 bg-[#F8FAFC] border-y border-[#E2E8F0]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="categories" className="py-16 bg-white overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-50px" }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+      >
 
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#2a2a2a] tracking-tight">
             {hasQuery ? `Results for "${searchQuery}"` : 'Explore 10,000+ Business Templates'}
           </h2>
           <p className="mt-3 text-[#475569] text-sm sm:text-base">
@@ -204,7 +210,7 @@ export default function CategoryCards({ searchQuery = '' }) {
             <div className="w-14 h-14 rounded-2xl bg-white border border-[#E2E8F0] flex items-center justify-center mb-4 text-2xl shadow-sm">
               🔍
             </div>
-            <h3 className="text-lg font-bold text-[#0F172A] mb-1">No categories found</h3>
+            <h3 className="text-lg font-bold text-[#2a2a2a] mb-1">No categories found</h3>
             <p className="text-sm text-[#475569]">
               Try "roadmap", "SWOT", "timeline", or "org chart".
             </p>
@@ -228,34 +234,40 @@ export default function CategoryCards({ searchQuery = '' }) {
                       delay: idx * 0.05 
                     }}
                     onClick={() => handleCardClick(cat.id)}
-                    className="group cursor-pointer p-5 rounded-2xl bg-white border border-[#E2E8F0] hover:border-[#7C3AED]/40 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center text-center gap-3"
+                    className="group relative overflow-hidden cursor-pointer rounded-2xl p-[1.5px] transition-all duration-300 hover:-translate-y-1.5 shadow-[0_2px_12px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_28px_rgba(0,0,0,0.1)]"
                   >
-                    <div
-                      className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
-                      style={{ backgroundColor: `${cat.color}12`, color: cat.color }}
-                    >
-                      <Icon className="w-5 h-5 stroke-[2]" />
+                    {/* The animated spinning light background that acts as a border */}
+                    <div className="absolute inset-[-100%] opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[conic-gradient(from_0deg_at_50%_50%,transparent_0%,#fcbd24_30%,#f16917_50%,transparent_70%)] animate-[spin_3s_linear_infinite]" />
+                    
+                    {/* The actual card content */}
+                    <div className="relative h-full w-full bg-white rounded-[15px] p-5 flex flex-col items-center text-center gap-3 border border-[#E2E8F0] group-hover:border-transparent transition-colors duration-300 z-10">
+                      <div
+                        className="w-11 h-11 rounded-xl flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+                        style={{ backgroundColor: `${cat.color}12`, color: cat.color }}
+                      >
+                        <Icon className="w-5 h-5 stroke-[2]" />
+                      </div>
+
+                      <h3 className="text-sm font-bold text-[#2a2a2a] group-hover:text-[#f16917] transition-colors leading-tight">
+                        {cat.name}
+                      </h3>
+
+                      <p className="text-xs text-[#475569] leading-relaxed max-w-xs">
+                        {cat.description}
+                      </p>
+
+                      <CountBadge
+                        loading={countsLoading}
+                        count={counts[cat.id] ?? 0}
+                      />
                     </div>
-
-                    <h3 className="text-sm font-bold text-[#0F172A] group-hover:text-[#7C3AED] transition-colors leading-tight">
-                      {cat.name}
-                    </h3>
-
-                    <p className="text-xs text-[#475569] leading-relaxed max-w-xs">
-                      {cat.description}
-                    </p>
-
-                    <CountBadge
-                      loading={countsLoading}
-                      count={counts[cat.id] ?? 0}
-                    />
                   </motion.div>
                 );
               })}
             </AnimatePresence>
           </div>
         )}
-      </div>
+      </motion.div>
     </section>
   );
 }

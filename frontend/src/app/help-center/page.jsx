@@ -36,11 +36,11 @@ export default function HelpCenter() {
     <div className="relative overflow-hidden bg-gradient-to-br from-[#F8FAFC] via-[#FAFAFF] to-[#F5F3FF]">
       <BubbleBackground />
 
-      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#0F172A]">
+      <main className="relative z-10 max-w-3xl mx-auto px-6 py-16 text-[#2a2a2a]">
         <h1 className="text-4xl font-extrabold mb-2">Help Center</h1>
         <p className="text-[#64748B] mb-10">
           Answers to common questions. Can't find what you need?{' '}
-          <a href="/contact" className="text-[#7C3AED] underline">Contact us</a>.
+          <a href="/contact" className="text-[#f16917] underline">Contact us</a>.
         </p>
 
         <div className="space-y-6">

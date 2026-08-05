@@ -35,7 +35,7 @@ export default function TermsOfServicePage() {
 
       <H2>3. Bring your own AI key</H2>
       <P>
-        AI generation requires you to connect your own Google Gemini or xAI Grok API key. You
+        AI generation requires you to connect your own Google Gemini API key. You
         are solely responsible for: obtaining the key, complying with the provider’s terms,
         and any usage, costs, or charges your provider bills you. We use your key only to
         carry out the AI requests you initiate, and you can remove it at any time. We are not

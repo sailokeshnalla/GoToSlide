@@ -85,7 +85,7 @@ export default function Navbar() {
   }, [router]);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-[#E2E8F0] bg-white/80 px-6 py-3.5 backdrop-blur-md transition-all duration-300 sm:px-8">
+    <nav className="sticky top-0 z-50 w-full border-b border-black/[0.04] bg-white/60 px-6 py-2.5 backdrop-blur-xl transition-all duration-300 sm:px-8">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
         {/* Logo */}
         <Link
@@ -99,15 +99,11 @@ export default function Navbar() {
           className="group flex shrink-0 items-center gap-2.5"
           aria-label="GoToSlide home"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-r from-[#7C3AED] to-[#A855F7] font-bold text-white shadow-sm transition-transform group-hover:scale-105">
-            G
-          </div>
-
-          <span className="text-xl font-extrabold tracking-tight text-[#0F172A]">
-            GoTo<span className="bg-gradient-to-r from-[#7C3AED] to-[#A855F7] bg-clip-text text-transparent">
-              Slide
-            </span>
-          </span>
+          <img 
+            src="/images/logo.png" 
+            alt="GoToSlide" 
+            className="h-10 md:h-11 w-auto object-contain transition-transform group-hover:scale-105" 
+          />
         </Link>
 
         {/* Center scrolling tagline */}
@@ -123,7 +119,7 @@ export default function Navbar() {
             }}
           >
             {shouldReduceMotion ? (
-              <p className="truncate text-center text-sm font-semibold tracking-wide text-[#0F172A]">
+              <p className="truncate text-center text-sm font-semibold tracking-wide text-[#2a2a2a]">
                 Turn ideas into presentation-ready decks
               </p>
             ) : (
@@ -168,7 +164,7 @@ export default function Navbar() {
                 aria-haspopup="menu"
                 aria-expanded={dropdownOpen}
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#7C3AED] to-[#A855F7] text-sm font-bold text-white shadow-sm">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#f16917] to-[#fcbd24] text-base font-bold text-white shadow-sm">
                   {initials}
                 </div>
 
@@ -193,7 +189,7 @@ export default function Navbar() {
                       <p className="text-xs font-medium text-[#94A3B8]">
                         Signed in as
                       </p>
-                      <p className="mt-0.5 truncate text-sm font-semibold text-[#0F172A]">
+                      <p className="mt-0.5 truncate text-sm font-semibold text-[#2a2a2a]">
                         {user.email}
                       </p>
                     </div>
@@ -202,10 +198,10 @@ export default function Navbar() {
                       <button
                         type="button"
                         onClick={handleSettings}
-                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#475569] transition-all hover:bg-[#F8FAFC] hover:text-[#0F172A] cursor-pointer"
+                        className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#475569] transition-all hover:bg-[#F8FAFC] hover:text-[#2a2a2a] cursor-pointer"
                         role="menuitem"
                       >
-                        <Settings className="h-4 w-4 text-[#7C3AED]" />
+                        <Settings className="h-4 w-4 text-[#f16917]" />
                         Settings
                       </button>
 
@@ -228,7 +224,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => router.push('/login')}
-                className="rounded-xl px-3.5 py-2 text-sm font-medium text-[#475569] transition hover:text-[#0F172A] cursor-pointer"
+                className="rounded-xl px-3.5 py-2 text-sm font-medium text-[#475569] transition hover:text-[#2a2a2a] cursor-pointer"
               >
                 Log In
               </button>
@@ -236,7 +232,7 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => router.push('/signup')}
-                className="rounded-full bg-gradient-to-r from-[#7C3AED] to-[#A855F7] px-5 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-md hover:shadow-purple-500/25 active:scale-95 cursor-pointer"
+                className="rounded-full bg-gradient-to-r from-[#f16917] to-[#fcbd24] px-5 py-2.5 text-sm font-semibold text-white transition-all hover:shadow-md hover:shadow-purple-500/25 active:scale-95 cursor-pointer"
               >
                 Get Started Free
               </button>

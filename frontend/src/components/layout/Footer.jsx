@@ -5,7 +5,7 @@ import BubbleBackground from '@/components/BubbleBackground';
 
 export default function Footer() {
   return (
-    <footer className="relative overflow-hidden border-t border-[#E2E8F0] bg-gradient-to-br from-[#F8FAFC] via-[#FAFAFF] to-[#F5F3FF] pt-14 pb-8">
+    <footer className="relative overflow-hidden border-t border-[#E2E8F0] bg-white pt-14 pb-8">
 
       <BubbleBackground />
 
@@ -16,22 +16,18 @@ export default function Footer() {
 
           {/* Left */}
           <div className="max-w-md">
-
-            <Link
-              href="/"
-              className="flex items-center gap-3 mb-5 group"
-            >
-              <div className="w-10 h-10 bg-gradient-to-r from-[#7C3AED] to-[#A855F7] rounded-xl flex items-center justify-center font-bold text-white text-lg shadow-md">
-                G
-              </div>
-
-              <span className="font-extrabold text-3xl tracking-tight text-[#0F172A]">
-                GoTo<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] to-[#A855F7]">
-              Slide
-            </span>
-              </span>
-            </Link>
-
+            <div className="h-[80px] flex items-center mb-6">
+              <Link
+                href="/"
+                className="group flex items-center"
+              >
+                <img 
+                  src="/images/logo.png" 
+                  alt="GoToSlide" 
+                  className="h-[80px] w-auto object-contain transition-transform group-hover:scale-105" 
+                />
+              </Link>
+            </div>
             <p className="text-[#475569] text-base leading-8 max-w-md">
               Premium presentation templates and AI-powered layout tools
               designed to make your next business meeting, strategy review,
@@ -42,16 +38,16 @@ export default function Footer() {
 
           {/* Right */}
           <div className="min-w-[180px]">
-
-            <h4 className="font-bold text-[#0F172A] text-sm tracking-[0.2em] uppercase mb-5">
-              Company
-            </h4>
-
+            <div className="h-[80px] flex items-center mb-6">
+              <h4 className="font-bold text-[#2a2a2a] text-sm tracking-[0.2em] uppercase">
+                Company
+              </h4>
+            </div>
             <ul className="space-y-4">
               <li>
                 <Link
                   href="/about-us"
-                  className="text-[#475569] hover:text-[#7C3AED] transition-colors"
+                  className="text-[#475569] hover:text-[#f16917] transition-colors"
                 >
                   About Us
                 </Link>
@@ -60,7 +56,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/help-center"
-                  className="text-[#475569] hover:text-[#7C3AED] transition-colors"
+                  className="text-[#475569] hover:text-[#f16917] transition-colors"
                 >
                   Help Center
                 </Link>
@@ -69,7 +65,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-[#475569] hover:text-[#7C3AED] transition-colors"
+                  className="text-[#475569] hover:text-[#f16917] transition-colors"
                 >
                   Contact
                 </Link>
@@ -93,21 +89,21 @@ export default function Footer() {
           <div className="flex flex-wrap justify-center gap-8 text-sm">
             <Link
               href="/privacy-policy"
-              className="text-[#475569] hover:text-[#7C3AED] transition-colors"
+              className="text-[#475569] hover:text-[#f16917] transition-colors"
             >
               Privacy Policy
             </Link>
 
             <Link
               href="/terms-of-service"
-              className="text-[#475569] hover:text-[#7C3AED] transition-colors"
+              className="text-[#475569] hover:text-[#f16917] transition-colors"
             >
               Terms of Service
             </Link>
 
             <Link
               href="/cookies"
-              className="text-[#475569] hover:text-[#7C3AED] transition-colors"
+              className="text-[#475569] hover:text-[#f16917] transition-colors"
             >
               Cookie Policy
             </Link>
