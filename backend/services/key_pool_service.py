@@ -7,7 +7,7 @@ from config.supabase_client import supabase_backend
 from utils.encryption import decrypt_api_key
 
 ASSIGNMENT_TIMEOUT_MINUTES = int(os.environ.get("ASSIGNMENT_TIMEOUT_MINUTES", "30"))
-VALID_PROVIDERS = {"gemini", "grok"}
+VALID_PROVIDERS = {"gemini"}
 
 def _validate_provider(provider: str):
     if provider not in VALID_PROVIDERS:
@@ -126,9 +126,9 @@ def release_expired_assignments():
         .lt("last_activity", cutoff) \
         .execute()
 
-def resolve_api_key_for_user(user_id: str, session_id: str, provider: str) -> str:
+def resolve_api_key_for_user(user_id: str, session_id: str, provider: str) -> tuple[str, bool]:
     """
-    Returns the DECRYPTED api key ready for provider usage.
+    Returns a tuple of (decrypted_api_key, is_personal_key).
     Never expose this key to the frontend.
     Priority:
     1. User's personal API key (BYOK)
@@ -144,7 +144,7 @@ def resolve_api_key_for_user(user_id: str, session_id: str, provider: str) -> st
     if personal_res.data and len(personal_res.data) > 0:
         encrypted_key = personal_res.data[0].get("encrypted_key")
         if encrypted_key:
-            return decrypt_api_key(encrypted_key)
+            return decrypt_api_key(encrypted_key), True
             
     # 2. Fall back to managed pool
     assignment = assign_or_get_managed_key(user_id, session_id, provider)
@@ -156,4 +156,4 @@ def resolve_api_key_for_user(user_id: str, session_id: str, provider: str) -> st
     if not encrypted_key:
         raise Exception("API key record is missing encrypted key data")
         
-    return decrypt_api_key(encrypted_key)
+    return decrypt_api_key(encrypted_key), False

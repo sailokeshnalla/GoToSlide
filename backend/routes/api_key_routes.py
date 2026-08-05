@@ -8,7 +8,6 @@ from services.key_pool_service import (
     release_all_session_assignments
 )
 from services.providers.gemini_provider import GeminiProvider
-from services.providers.grok_provider import GrokProvider
 
 router = APIRouter(prefix="/api/key-assignment", tags=["Key Assignment"])
 
@@ -85,8 +84,8 @@ def save_user_key(request: UserKeyRequest, auth: dict = Depends(require_supabase
         from config.supabase_client import supabase_backend
         
         # Test key format
-        if request.provider == "gemini" and not request.key.startswith("AIza"):
-            pass # just a warning on frontend
+        if request.provider == "gemini" and not (request.key.startswith("AIza") or request.key.startswith("AQ.")):
+            raise HTTPException(status_code=400, detail="Invalid Gemini API key format. It should start with 'AIza' or 'AQ.'.")
             
         encrypted = encrypt_api_key(request.key)
         
